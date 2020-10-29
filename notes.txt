@@ -1,0 +1,19 @@
+vertical scaling
+
+programming and pre-processing
+
+backups 
+
+horitzontal scaling
+
+microservices
+
+distributed systems
+
+load balancers
+
+decoupling
+
+logging, metrics, calculations
+
+extensible
