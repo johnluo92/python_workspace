@@ -1,0 +1,26 @@
+import sys
+
+class Solution:
+    def isAlienSorted(self, words, order): # boolean
+    
+        def numberify_chars(word, order):
+            new_word = []
+            for char in word:
+                new_word.append((order.index(char)))
+            return new_word
+        
+        new_list = []
+        for word in words:
+            new_list.append(numberify_chars(word, order))
+        list2 = sorted(new_list)
+        print(list2)
+        print(new_list)
+        print(bool(list2 == new_list))
+            
+            
+words = ["hello","leetcode"]
+order = "hlabcdefgijkmnopqrstuvwxyz"
+
+# words = ["kuvp","q"]
+# order = "ngxlkthsjuoqcpavbfdermiywz"
+Solution().isAlienSorted(words, order)

@@ -1,101 +1,52 @@
 import sys
-sys.setrecursionlimit(29000)
-# print(sys.getrecursionlimit())
-
-class Solution:
-    def shortestPathBinaryMatrix(self, grid):
-
-        visited = [[[float('inf'),False] for col in row] for row in grid]
-        
-        if grid[0][0] == 1:
-            return -1
-        if grid[-1][-1] == 1:
-            return -1
-        self.shortest = float('inf')
-        self.dfs_traverse(grid, visited, 0, 0, 1)
-
-        for row in visited:
-            print(row)
-
-        return self.shortest if self.shortest != float('inf') else -1
+def shortestPathBinaryMatrix(grid):
     
-    def dfs_traverse(self, grid, visited, row, col, current_path_len):
-
-        if current_path_len > visited[row][col][0] and visited[row][col][1]:
-            return
-        else:
-            visited[row][col][0] = current_path_len
-
-        visited[row][col][1] = True
-
-        upper, right, left, lower = 0, len(grid[0]), 0, len(grid)
-        
-        if row == len(grid)-1 and col == len(grid[0])-1:
-            self.shortest = min(self.shortest, current_path_len)
-            return
-        
-        # can go down
-        if row + 1 < lower:
-            if grid[row+1][col] != 1:
-                self.dfs_traverse(grid, visited, row+1, col, current_path_len+1)
-        # can go right
-        if col + 1 < right:
-            if grid[row][col+1] != 1:
-                self.dfs_traverse(grid, visited, row, col+1, current_path_len+1)
-        # can go left
-        if col - 1 >= left:
-            if grid[row][col-1] != 1:
-                self.dfs_traverse(grid, visited, row, col-1, current_path_len+1)
-        # can go up
-        if row - 1 >= upper:
-            if grid[row-1][col] != 1:
-                self.dfs_traverse(grid, visited, row-1, col, current_path_len+1)
-                
-        # can go down+right
-        if row + 1 < lower and col + 1 < right:
-            if grid[row+1][col+1] != 1:
-                self.dfs_traverse(grid, visited, row+1, col+1, current_path_len+1)
-        # can go down-left
-        if row + 1 < lower and col - 1 >= left:
-            if grid[row+1][col-1] != 1:
-                self.dfs_traverse(grid, visited, row+1, col-1, current_path_len+1)
-        # can go up-left
-        if row - 1 >= upper and col - 1 >= left:
-            if grid[row-1][col-1] != 1:
-                self.dfs_traverse(grid, visited, row-1, col-1, current_path_len+1)
-        # can go up-right
-        if row - 1 >= upper and col + 1 < right:
-            if grid[row-1][col+1] != 1:
-                self.dfs_traverse(grid, visited, row-1, col+1, current_path_len+1)
-        return
+    new_grid = [[1 if node == 0 else -1 for node in row] for row in grid]
+    traveled = [[False if node == 0 else True for node in row] for row in grid]
+    traveled[0][0] = True
+    traverse_graph(new_grid, traveled)
     
-arr=[[0,0,0],
+    return new_grid[-1][-1] if traveled[-1][-1] else -1
+        
+def traverse_graph(new_grid, traveled):
+    queue = [(0,0)]
+    while len(queue):
+        i, j = queue.pop(0)
+        getNeighbors(i, j, new_grid, traveled, queue)
+    
+def getNeighbors(i, j, grid, traveled, queue):
+    for x,y in ((0,-1),(-1,-1),(-1,0),(-1,1),(0,1),(1,1),(1,0),(1,-1)): #clockwise from left
+        row, col = i+x, j+y
+        if row >= 0 and row < len(grid) and col >= 0 and col < len(grid[0]):
+            if not traveled[row][col]:
+                traveled[row][col] = True
+                grid[row][col] = grid[row][col] + grid[i][j]
+                queue.append((row,col))
+
+arr1=[[0,0,0],
      [1,1,0],
      [1,1,0]]
-    
-arr=[[0,0,0,1],
+
+arr2=[[0,0,0,1],
      [1,1,1,0],
      [1,1,0,1],
      [1,1,1,0]]
-    
-    # [[0,0,1,0,0,0,0],
-    #  [0,1,0,0,0,0,1],
-    #  [0,0,1,0,1,0,0],
-    #  [0,0,0,1,1,1,0],
-    #  [1,0,0,1,1,0,0],
-    #  [1,1,1,1,1,0,1],
-    #  [0,0,1,0,0,0,0]]
-    
-    
-arr=[[0,0,1,0,0,0,0],
+     
+arr2_5 = [[0,0,0,0,1],
+        [1,0,0,0,0],
+        [0,1,0,1,0],
+        [0,0,0,1,1],
+        [0,0,0,1,0]]
+
+arr3=[[0,0,1,0,0,0,0],
      [0,1,0,0,0,0,1],
      [0,0,1,0,1,0,0],
      [0,0,0,1,1,1,0],
      [1,0,0,1,1,0,0],
      [1,1,1,1,1,0,1],
      [0,0,1,0,0,0,0]]
-
-arr =[
+     
+arr4 =[
  [0,1,0,1,1,0,1,0,1,0,1,1,1,1,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,1,1,0,0,0,0,1,1,0,0,1,1,0,0,1,0,1,1,0,1,1,0,0,0,0,1,1,1,0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,1,1,0,1,1,0,0,0,0,0,0,0,1,0,0,0,1,1,1,1]
 ,[1,0,0,0,1,0,0,1,0,0,1,1,0,1,1,1,1,1,1,1,0,1,0,0,0,1,1,1,1,0,1,0,1,0,1,1,1,1,1,1,1,0,0,0,1,1,0,0,1,0,0,0,0,1,1,0,1,0,0,0,1,1,1,0,0,0,0,1,0,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,0,0,0,0,1,1]
 ,[0,0,1,0,1,1,1,1,1,1,0,1,0,0,0,0,0,1,1,0,1,0,1,1,1,1,0,1,1,0,0,1,1,0,0,0,0,0,1,0,0,1,1,1,0,1,1,1,1,1,0,1,0,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,0,0,0,1,1,0,1,0,0,1,0,1,1,1,0,0,1,1]
@@ -197,4 +148,16 @@ arr =[
 ,[0,1,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,1,1,0,1,1,0,1,0,1,0,1,0,1,1,1,1,0,0,0,1,0,1,1,0,0,1,1,0,1,0,0]
 ,[0,0,1,1,0,0,0,1,1,0,1,0,0,0,0,0,1,1,0,1,0,1,1,0,1,0,1,0,0,1,0,0,0,0,0,1,1,0,1,1,0,1,1,1,0,0,1,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,0,0,1,1,0,0,0,0,1,1,0,0,1,0,0,1,0,1,1,1,0,0,0,0,1,1,1,1,0,1,0]]
 
-print(Solution().shortestPathBinaryMatrix(arr))
+import unittest
+class TestProgram(unittest.TestCase):
+    def test_case_1(self):
+        self.assertEqual(shortestPathBinaryMatrix(arr1), 4)
+    def test_case_2(self):
+        self.assertEqual(shortestPathBinaryMatrix(arr2), 6)
+    def test_case_2_5(self):
+        self.assertEqual(shortestPathBinaryMatrix(arr2_5), -1)
+    def test_case_3(self):
+        self.assertEqual(shortestPathBinaryMatrix(arr3), 10)
+    def test_case_4(self):
+        self.assertEqual(shortestPathBinaryMatrix(arr4), 146)
+unittest.main()

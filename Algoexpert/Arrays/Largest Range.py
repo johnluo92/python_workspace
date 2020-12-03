@@ -8,8 +8,27 @@ A range of numbers is defined as a set of numbers that come right after each oth
 '''
 
 # solution 1
+array = [1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]
 
-# o(nlog(n)) time | o(n) space
+def largestRange(array):
+    visited = {num:False for num in array}
+    longest = [0,0]
+    for num in array:
+
+        smaller, bigger = num-1, num+1
+        while smaller in visited and not visited[smaller]:
+            visited[smaller] = True
+            smaller -= 1
+        smaller += 1
+        while bigger in visited and not visited[bigger]:
+            visited[bigger] = True
+            bigger += 1
+        bigger -= 1
+
+        longest = max(longest, [smaller, bigger], key = lambda x: x[1] - x[0])
+
+    return longest
+
 def largestRange(array):
     array = sorted(array)
     beg = end = array[0]
@@ -98,6 +117,6 @@ def largestRange(array):
 
 array = [1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]
 
-# ans = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 
 print(largestRange(array))
