@@ -8,7 +8,7 @@ def interweavingStrings(one, two, three):
 def dfs_traverse(one, two, three, i,j):
     a,b = False, False
     
-    print(i, j, len(three))
+    # print(i, j, len(three))
     
     k = i+j
     
@@ -33,9 +33,9 @@ def dfs_traverse(one, two, three, i,j):
 # two = "b"
 # three = 'ac'
 
-one = 'algoexpert'
-two = 'your-dream-job'
-three = 'your-algodream-expertjo'
+one = 'aaaaaaaaaaaaaaaaaaaaaa' * 20
+two = 'aaaaaaaaaaaaaaaaaaaaaa' * 20
+three = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' * 20
 
 # one = "aacaaaa"
 # three = "aaaabacaaaaaaa" 
