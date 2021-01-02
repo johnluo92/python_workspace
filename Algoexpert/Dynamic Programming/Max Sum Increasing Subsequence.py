@@ -37,7 +37,6 @@ def getIncreasingSequence(array, sequences, currentMaxID):
         currentMaxID = sequences[currentMaxID]
     return list(reversed(sequence))
 
-
 array = [10, 70, 20, 30, 50, 11, 30]
 
 print(maxSumIncreasingSubsequence(array))  # True
