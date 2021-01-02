@@ -5,9 +5,10 @@ def topologicalSort(jobs, deps):
     myGraph.createTaskOrder()
     return list(myGraph.answer.keys())
 
+
 class graph():
     def __init__(self, jobs, deps):
-        self.dependencies = {key:[] for key in jobs}
+        self.dependencies = {key: [] for key in jobs}
         self.traversing = set()
         self.answer = {}
 
@@ -42,7 +43,6 @@ class graph():
                 self.answer[job] = None
             return True
 
-
     def canTraverseGraph(self, current_job):
         if current_job in self.answer:
             return True
@@ -59,4 +59,3 @@ jobs = [1, 2, 3, 4]
 deps = [[1, 2], [1, 3], [3, 2], [4, 2], [4, 3]]
 answer = topologicalSort(jobs, deps)
 print(answer)
-
