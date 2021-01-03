@@ -45,7 +45,7 @@ class timer:
                     time.sleep(1)
                     interval -= 13
 
-            subprocess.Popen("say" + " next qustion", shell=True)
+            subprocess.Popen('mpg321'  + ' ding.mp3', shell=True)
             questionCount -=1
             interval = self.interval
 

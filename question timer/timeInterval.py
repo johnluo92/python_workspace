@@ -2,17 +2,13 @@ import time
 import os
 import subprocess
 import sys
-from playsound import playsound
 print(sys.version)
 
-from pydub import AudioSegment
-from pydub.playback import play
+subprocess.Popen('mpg321'  + ' ding.mp3', shell=True)
 
-song = AudioSegment.from_mp3("ding.mp3")
-play(song)
-
-# playsound("ding.mp3")
-
+# from mpyg321.mpyg321 import MPyg321Player
+# player = MPyg321Player()
+# player.play_song("ding.mp3")
 
 # startTime = time.time()
 # subprocess.Popen("say" + " hi my name is alex its nice to meet you", shell=True)
