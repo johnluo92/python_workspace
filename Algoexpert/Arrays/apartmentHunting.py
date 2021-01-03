@@ -11,7 +11,7 @@ def apartmentHunting(blocks, reqs):
                 closest[key] = i if value else closest[key]
                 locations[i][key] = abs(closest[key] - i)
     
-  closest = dict.fromkeys(reqs, float('inf'))
+    closest = dict.fromkeys(reqs, float('inf'))
     shortestDistanceBlock = float('inf')
     bestBlock = None
     

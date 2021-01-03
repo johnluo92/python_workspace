@@ -1,18 +1,18 @@
-def topologicalSort(jobs, deps):
+def topologicalSort(tasks, dependencyList):
     # Write your code here.
-    myGraph = graph(jobs, deps)
+    myGraph = Graph(tasks, dependencyList)
     print(myGraph.dependencies)
     myGraph.createTaskOrder()
     return list(myGraph.answer.keys())
 
 
-class graph():
-    def __init__(self, jobs, deps):
-        self.dependencies = {key: [] for key in jobs}
+class Graph:
+    def __init__(self, tasks, dependencyList):
+        self.dependencies = {key: [] for key in tasks}
         self.traversing = set()
         self.answer = {}
 
-        self.populateDependecies(deps)
+        self.populateDependecies(dependencyList)
 
     def populateDependecies(self, tasks):
         for dep, task in tasks:
@@ -20,8 +20,6 @@ class graph():
 
     def createTaskOrder(self):
         for job in self.dependencies:
-            print('answer set:', self.answer)
-            print('traversing set:', self.traversing)
             if self.canTraverseGraph(job):
                 continue
             else:
@@ -44,6 +42,8 @@ class graph():
             return True
 
     def canTraverseGraph(self, current_job):
+        print('answer set:', self.answer)
+        print('traversing set:', self.traversing)
         if current_job in self.answer:
             return True
         elif current_job not in self.traversing:
