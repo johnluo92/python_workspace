@@ -1,42 +1,62 @@
-import sympy
+from sympy import isprime
+import time
+
 
 def permutationPrimes(string):
-
     permutations = []
-    print(isPrime(string))
+    primeSet = set()
 
-    for i in range(1, len(string)+1):
+    for i in range(1, len(string) + 1):
         left = int(string[0:i])
-        prime = sympy.isprime(left)
-        if prime:
-            generatePerms(string, i, permutations, [left])
+        if isPrime(left, primeSet):
+            generatePerms(string, i, permutations, [left], primeSet)
 
-    for perm in permutations:
-        print(perm)
+    print('print sets')
+    for permset in permutations:
+        print(permset)
     return permutations
 
-def generatePerms(string, idx_i, permutations, current):
-    if idx_i == len(string):
-        permutations.append(current)
+
+def generatePerms(string, i, permutations, current, primeSet):
+    if i == len(string):
+        permutations.append(current[:])
         return
 
-    for j in range(idx_i+1, len(string)+1):
-        right = int(string[idx_i:j])
-        prime = sympy.isprime(right)
-        if isPrime(right):
+    for j in range(i + 1, len(string) + 1):
+        right = int(string[i:j])
+        if isPrime(right, primeSet):
             current.append(right)
-            generatePerms(string, j, permutations, current)
+            generatePerms(string, j, permutations, current, primeSet)
             current.pop()
 
 
-def isPrime(string):
-    num = int(string)
-    return (num % 2 != 0 and num != 1) or num == 2
+def isPrime(num, primeSet):
+    if num in primeSet:
+        return True
+    if num == 1:
+        return False
+    if num == 2:
+        return True
+    for i in range(2, (num // 2)):
+        if num % i == 0:
+            return False
+    primeSet.add(num)
+    return True
 
-num = '21373'
-num = '323'
-# num = '2'
 
-permutationPrimes(num)
+string = '135029'
+# string = '21373'
+# string = '323'
+# string = '53'
+# string = '5'
+# string = '2'
+start = time.time()
+# print(f'{string} is a prime:', isPrime(string, set()))
+# print(f'verifying:', isprime(int(string)))
+print()
+permutationPrimes(string)
+end = time.time()
 
+total = start - end
+print(total)
 # print(isPrime(num))

@@ -1,8 +1,12 @@
-# Python 3 program to Find all the 
+# Python 3 program to Find all the
 # ways to split the given string
 # into Primes.
-primes = [True] * 1000001
-maxn = 1000000
+import time
+import sys
+
+primes = [True] * sys.maxsize
+maxn = sys.maxsize-1
+
  
 # Sieve of Eratosthenes
 def sieve():
@@ -12,11 +16,9 @@ def sieve():
      
     while i * i <= maxn:
         if(primes[i]):
-            for j in range(i * i, 
-                           maxn + 1, i):
+            for j in range(i * i, maxn + 1, i):
                 primes[j] = False
         i += 1
- 
 # Function Convert integer
 # to binary string
 def toBinary(n):
@@ -95,12 +97,20 @@ def PrimeSplit(st):
  
 # Driver code
 if __name__ == "__main__":
-   
+    start = time.time()
     st = "11373"
-    st = "21373"
-    st = '323'
-    print(st)
+    # st = "21373"
+    # st = '323'
+    # st = '53'
+    # st = '5'
+    st = '1133311'
+    st = '3317771'
+    st = '1350297079989171477791892123929141605573631151125933376097791877830238462471373933362476484818693477173990672289892448124097556197582379957168911392680312103962394732707409889862447273901522659'
     sieve()    
     PrimeSplit(st)
+
+    end = time.time()
+    total = start-end
+    print(total)
  
 # This code is contributed by Chitranayal

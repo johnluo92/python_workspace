@@ -1,20 +1,25 @@
+import logging
+import threading
 import time
-import os
-import subprocess
-import sys
-print(sys.version)
 
-subprocess.Popen('mpg321'  + ' ding.mp3', shell=True)
+def thread_function(name):
+    logging.info("Thread %s: starting", name)
+    countdown = 10
+    while countdown:
+        print('hi')
+        time.sleep(1)
+        countdown -=1
+    logging.info("Thread %s: finishing", name)
 
-# from mpyg321.mpyg321 import MPyg321Player
-# player = MPyg321Player()
-# player.play_song("ding.mp3")
+if __name__ == "__main__":
+    format = "%(asctime)s: %(message)s"
+    logging.basicConfig(format=format, level=logging.INFO,
+                        datefmt="%H:%M:%S")
 
-# startTime = time.time()
-# subprocess.Popen("say" + " hi my name is alex its nice to meet you", shell=True)
-# for j in range(20000):
-#     print(j, end='\r')
-# endTime = time.time()
-
-# total = startTime - endTime
-# print(total)
+    logging.info("Main    : before creating thread")
+    x = threading.Thread(target=thread_function, args=(1,))
+    logging.info("Main    : before running thread")
+    x.start()
+    logging.info("Main    : wait for the thread to finish")
+    # x.join()
+    logging.info("Main    : all done")
